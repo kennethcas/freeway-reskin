@@ -34,13 +34,45 @@ public class player1Script : MonoBehaviour
     }
 
     //if the player hits an enemy
+    // void OnTriggerEnter2D(Collider2D collision) {
+    //     if (collision.gameObject.tag == "enemy") {
+    //         Debug.Log("player 1 hit");
+    //         // Vector3 position = transform.position;
+    //         // position.y = position.y - 2;
+    //         // transform.position = position;
+            
+    //         //transform.position += Vector3.down;
+
+    //         Rigidbody2D enemy = collision.GetComponent<Rigidbody2D>();
+    //         //make kinematic stay off to make dynamic (apply force)
+    //         enemy.isKinematic = false;
+    //         //vector2 "difference" is the enemy's pos subtracted by player pos
+    //         Vector2 difference = enemy.transform.position - transform.position;
+    //         //difference multiplied by knockback distance
+    //         difference = difference.normalized * 4;
+    //         enemy.AddForce(difference, ForceMode2D.Impulse);
+    //         enemy.isKinematic = true;
+    //     }
+    // }
+
+    //if the enemy collides with player 1
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "enemy") {
-            Debug.Log("hit");
-            // Vector3 position = transform.position;
-            // position.y = position.y - 2;
-            // transform.position = position;
-            transform.position += Vector3.down;
+            Debug.Log("player 1 hit");
+
+            Rigidbody2D player1 = collision.GetComponent<Rigidbody2D>();
+            //make kinematic stay off to make dynamic (apply force)
+            player1.isKinematic = false;
+            //vector2 "difference" is the player 1's pos subtracted by enemy pos
+            //Vector2 difference = player1.transform.position.y - transform.position.y;
+            //difference multiplied by knockback distance
+            //difference = difference.normalized * 1.5f;
+            //player1.AddForce(difference, ForceMode2D.Impulse);
+            player1.AddForce(-transform.up, ForceMode2D.Impulse);
+
+            player1.velocity = Vector2.zero;
+            player1.isKinematic = true;
+            //StartCoroutine(knockbackCoroutine(player1));
         }
     }
 }

@@ -32,4 +32,15 @@ public class player2Script : MonoBehaviour
     void Move(Vector3 direction) {
         transform.position += direction * speed;
     }
+    
+    //if the player hits an enemy
+    void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "enemy") {
+            Debug.Log("player 2 hit");
+            // Vector3 position = transform.position;
+            // position.y = position.y - 2;
+            // transform.position = position;
+            transform.position += Vector3.down;
+        }
+    }
 }
