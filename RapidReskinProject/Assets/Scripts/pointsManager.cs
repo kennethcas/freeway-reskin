@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class pointsManager : MonoBehaviour
 {
+    [Header("Points UI")]
     public BoxCollider2D col;
     public int pts;
 
