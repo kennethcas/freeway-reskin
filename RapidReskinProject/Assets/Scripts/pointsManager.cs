@@ -15,10 +15,12 @@ public class pointsManager : MonoBehaviour
     public BoxCollider2D col;
     public int pts;
 
+    //vector variable 
     private Vector3 bottomOfScreen;
 
     void Start() 
     {
+        //vector variable bottomOfScreen assigned a position (bottom of screen)
         bottomOfScreen = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.05f));
     }
 
@@ -33,9 +35,10 @@ public class pointsManager : MonoBehaviour
         pts++;
         pointsText.text = pts.ToString();
 
-       Vector3 position = col.transform.position;
-       position.y = bottomOfScreen.y;
-       col.transform.position = position;
+        //when colliding with the point area, give player a new y pos using coordinates of bottomOfScreen
+        Vector3 position = col.transform.position;
+        position.y = bottomOfScreen.y;
+        col.transform.position = position;
     }
 
     

@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class player2Script : MonoBehaviour
 {
-//speed
+    //speed variable
     public float speed;
+
+    //rigidbody variable called player2Body
+    Rigidbody2D player2Body;
+
+    public float knockbackTimeP2;
+    public bool player2Hit;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //setting player 2's rigidbody into the variable
+        player2Body = gameObject.GetComponent<Rigidbody2D>();
+        knockbackTimeP2 = 0.5f;
+        player2Hit = false;
     }
 
     // Update is called once per frame
@@ -26,6 +35,25 @@ public class player2Script : MonoBehaviour
             //then player 2 will move down
             Move(Vector3.down);
         }
+    
+        //if player is hit, then the timer will countdown
+        if (player2Hit == true) {
+            knockbackTimeP2 -= Time.deltaTime; 
+        }
+        //if the countdown finishes, player is not hit. reset the timer
+        else if (player2Hit == false) {
+            knockbackTimeP2 = 0.5f;             
+        }
+
+        //if the countdown hits zero
+        if (knockbackTimeP2 <= 0) {
+            //stop player from moving
+            player2Body.velocity = Vector2.zero;
+            //set bool to false; player is no longer hit. bool triggers timer reset
+            player2Hit = false;
+            //set back to kinematic; player is no longer affected by gravity
+            player2Body.isKinematic = true;
+        }
     }
 
     //move function
@@ -37,10 +65,12 @@ public class player2Script : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "enemy") {
             Debug.Log("player 2 hit");
-            // Vector3 position = transform.position;
-            // position.y = position.y - 2;
-            // transform.position = position;
-            transform.position += Vector3.down;
+            //set kinematic to dynamic so force is applied (gravity on)
+            player2Body.isKinematic = false;
+            //force applied downwards to the player to create knock back effect
+            player2Body.AddForce(-transform.up, ForceMode2D.Impulse);
+            //set bool to true; player has been hit
+            player2Hit = true;
         }
     }
 }

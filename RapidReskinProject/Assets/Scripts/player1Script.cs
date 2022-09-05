@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class player1Script : MonoBehaviour
 {
-//speed
+    //speed variable
     public float speed;
 
-    
+    //rigidbody variable called player1Body
+    Rigidbody2D player1Body;
+
     public float knockbackTime;
     public bool player1Hit;
 
     // Start is called before the first frame update
     void Start()
     {
-        knockbackTime = 10f;
+        //setting player 1's rigidbody into the variable
+        player1Body = gameObject.GetComponent<Rigidbody2D>();
+        knockbackTime = 0.5f;
         player1Hit = false;
     }
 
@@ -32,20 +36,23 @@ public class player1Script : MonoBehaviour
             Move(Vector3.down);
         }
 
-        
+        //if player is hit, then the timer will countdown
         if (player1Hit == true) {
             knockbackTime -= Time.deltaTime; 
         }
+        //if the countdown finishes, player is not hit. reset the timer
         else if (player1Hit == false) {
-            knockbackTime = 10f;             
+            knockbackTime = 0.5f;             
         }
 
-
+        //if the countdown hits zero
         if (knockbackTime <= 0) {
-            Rigidbody2D player1 = GetComponent<Rigidbody2D>();
-            player1.velocity = Vector2.zero;
+            //stop player from moving
+            player1Body.velocity = Vector2.zero;
+            //set bool to false; player is no longer hit. bool triggers timer reset
             player1Hit = false;
-            player1.isKinematic = true;
+            //set back to kinematic; player is no longer affected by gravity
+            player1Body.isKinematic = true;
         }
     }
 
@@ -54,24 +61,16 @@ public class player1Script : MonoBehaviour
         transform.position += direction * speed;
     }
 
-    //if the enemy collides with player 1
+    //if the player collides with an enemy
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "enemy") {
             Debug.Log("player 1 hit");
-
-            Rigidbody2D player1 = collision.GetComponent<Rigidbody2D>();
-            //make kinematic stay off to make dynamic (apply force)
-            player1.isKinematic = false;
-            //vector2 "difference" is the player 1's pos subtracted by enemy pos
-            //Vector2 difference = player1.transform.position.y - transform.position.y;
-            //difference multiplied by knockback distance
-            //difference = difference.normalized * 1.5f;
-            //player1.AddForce(difference, ForceMode2D.Impulse);
-            player1.AddForce(-transform.up, ForceMode2D.Impulse);
-
-            player1.velocity = Vector2.zero;
-            player1.isKinematic = true;
-            //StartCoroutine(knockbackCoroutine(player1));
+            //set kinematic to dynamic so force is applied (gravity on)
+            player1Body.isKinematic = false;
+            //force applied downwards to the player to create knock back effect
+            player1Body.AddForce(-transform.up, ForceMode2D.Impulse);
+            //set bool to true; player has been hit
+            player1Hit = true;
         }
     }
 }
