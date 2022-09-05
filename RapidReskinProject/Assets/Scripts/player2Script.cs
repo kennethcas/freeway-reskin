@@ -18,7 +18,7 @@ public class player2Script : MonoBehaviour
     {
         //setting player 2's rigidbody into the variable
         player2Body = gameObject.GetComponent<Rigidbody2D>();
-        knockbackTimeP2 = 0.5f;
+        knockbackTimeP2 = 0.6f;
         player2Hit = false;
     }
 
@@ -32,8 +32,11 @@ public class player2Script : MonoBehaviour
         }
         //else if player 2 presses down arrow key
         else if (Input.GetKey(KeyCode.DownArrow)) {
-            //then player 2 will move down
-            Move(Vector3.down);
+            //and if the player's y position is above the bottom of the screen
+            if (transform.position.y > -9.4f) {
+                //then player 2 will move down
+                Move(Vector3.down);
+            }
         }
     
         //if player is hit, then the timer will countdown
@@ -42,7 +45,7 @@ public class player2Script : MonoBehaviour
         }
         //if the countdown finishes, player is not hit. reset the timer
         else if (player2Hit == false) {
-            knockbackTimeP2 = 0.5f;             
+            knockbackTimeP2 = 0.6f;             
         }
 
         //if the countdown hits zero

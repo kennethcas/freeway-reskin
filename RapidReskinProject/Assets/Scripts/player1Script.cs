@@ -10,7 +10,7 @@ public class player1Script : MonoBehaviour
     //rigidbody variable called player1Body
     Rigidbody2D player1Body;
 
-    public float knockbackTime;
+    public float knockbackTimeP1;
     public bool player1Hit;
 
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class player1Script : MonoBehaviour
     {
         //setting player 1's rigidbody into the variable
         player1Body = gameObject.GetComponent<Rigidbody2D>();
-        knockbackTime = 0.5f;
+        knockbackTimeP1 = 0.6f;
         player1Hit = false;
     }
 
@@ -32,21 +32,24 @@ public class player1Script : MonoBehaviour
         }
         //else if player 1 presses S
         else if (Input.GetKey(KeyCode.S)) {
-            //then player 1 will move down
-            Move(Vector3.down);
+            //and if the player's y position is above the bottom of the screen
+            if (transform.position.y > -9.4f) {
+                //then player 1 will move down
+                Move(Vector3.down);
+            }
         }
 
         //if player is hit, then the timer will countdown
         if (player1Hit == true) {
-            knockbackTime -= Time.deltaTime; 
+            knockbackTimeP1 -= Time.deltaTime; 
         }
         //if the countdown finishes, player is not hit. reset the timer
         else if (player1Hit == false) {
-            knockbackTime = 0.5f;             
+            knockbackTimeP1 = 0.6f;             
         }
 
         //if the countdown hits zero
-        if (knockbackTime <= 0) {
+        if (knockbackTimeP1 <= 0) {
             //stop player from moving
             player1Body.velocity = Vector2.zero;
             //set bool to false; player is no longer hit. bool triggers timer reset
