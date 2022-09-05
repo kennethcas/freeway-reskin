@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class player2Script : MonoBehaviour
 {
+    /*Below are the links and sources used to help code this project!
+    
+    “How to make Frogger in Unity (Complete Tutorial)” by Zigurous
+    Section Environment Loop
+    https://www.youtube.com/watch?v=GxlxZ5q__Tc&list=PL3J5ZZINwCjTcqqOzdKPbZkA1KfnLsp8w&index=8&t=19s 
+
+    “Enemy Knockback in Unity” by BliskenX
+    https://www.youtube.com/watch?v=nHPXiRNaNoM*/
+    
     //speed variable
     public float speed;
 
