@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class pointsManager : MonoBehaviour
 {
     [Header("Points UI")]
+    [SerializeField] private TextMeshProUGUI dialogueText;
+
+    [Header("Players")]
+    public GameObject player1;
+    public GameObject player2;
+
+    [Header("Points")]
+
     public BoxCollider2D col;
     public int pts;
 
