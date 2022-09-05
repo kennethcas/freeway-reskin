@@ -14,8 +14,6 @@ public class leftEnemyMovement : MonoBehaviour
     private Vector3 leftSide;
     private Vector3 rightSide;
 
-    public float knockbackTime;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -45,34 +43,6 @@ public class leftEnemyMovement : MonoBehaviour
             //then it will move
             transform.Translate(direction * speed * Time.deltaTime);
         }
-        
     }
-
-    //if the enemy collides with player 1
-    void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.tag == "player1") {
-            Debug.Log("player 1 hit");
-
-            Rigidbody2D player1 = collision.GetComponent<Rigidbody2D>();
-            //make kinematic stay off to make dynamic (apply force)
-            player1.isKinematic = false;
-            //vector2 "difference" is the player 1's pos subtracted by enemy pos
-            //Vector2 difference = player1.transform.position.y - transform.position.y;
-            //difference multiplied by knockback distance
-            //difference = difference.normalized * 1.5f;
-            //player1.AddForce(difference, ForceMode2D.Impulse);
-            player1.AddForce(-transform.up, ForceMode2D.Impulse);
-
-            // player1.velocity = Vector2.zero;
-            // player1.isKinematic = true;
-            //StartCoroutine(knockbackCoroutine(player1));
-        }
-    }
-
-    // private IEnumerator knockbackCoroutine(Rigidbody2D player1) {
-    //     yield return new WaitForSeconds(knockbackTime);
-    //     player1.velocity = Vector2.zero;
-    //     player1.isKinematic = true;
-    // }
 
 }

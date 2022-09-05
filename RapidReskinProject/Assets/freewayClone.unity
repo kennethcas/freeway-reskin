@@ -676,7 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   direction: {x: 1, y: 0}
-  knockbackTime: 5
+  knockbackTime: 10
 --- !u!50 &325808776
 Rigidbody2D:
   serializedVersion: 4

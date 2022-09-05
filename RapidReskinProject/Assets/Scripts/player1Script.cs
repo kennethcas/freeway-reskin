@@ -7,10 +7,15 @@ public class player1Script : MonoBehaviour
 //speed
     public float speed;
 
+    
+    public float knockbackTime;
+    public bool player1Hit;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        knockbackTime = 10f;
+        player1Hit = false;
     }
 
     // Update is called once per frame
@@ -26,34 +31,28 @@ public class player1Script : MonoBehaviour
             //then player 1 will move down
             Move(Vector3.down);
         }
+
+        
+        if (player1Hit == true) {
+            knockbackTime -= Time.deltaTime; 
+        }
+        else if (player1Hit == false) {
+            knockbackTime = 10f;             
+        }
+
+
+        if (knockbackTime <= 0) {
+            Rigidbody2D player1 = GetComponent<Rigidbody2D>();
+            player1.velocity = Vector2.zero;
+            player1Hit = false;
+            player1.isKinematic = true;
+        }
     }
 
     //move function
     void Move(Vector3 direction) {
         transform.position += direction * speed;
     }
-
-    //if the player hits an enemy
-    // void OnTriggerEnter2D(Collider2D collision) {
-    //     if (collision.gameObject.tag == "enemy") {
-    //         Debug.Log("player 1 hit");
-    //         // Vector3 position = transform.position;
-    //         // position.y = position.y - 2;
-    //         // transform.position = position;
-            
-    //         //transform.position += Vector3.down;
-
-    //         Rigidbody2D enemy = collision.GetComponent<Rigidbody2D>();
-    //         //make kinematic stay off to make dynamic (apply force)
-    //         enemy.isKinematic = false;
-    //         //vector2 "difference" is the enemy's pos subtracted by player pos
-    //         Vector2 difference = enemy.transform.position - transform.position;
-    //         //difference multiplied by knockback distance
-    //         difference = difference.normalized * 4;
-    //         enemy.AddForce(difference, ForceMode2D.Impulse);
-    //         enemy.isKinematic = true;
-    //     }
-    // }
 
     //if the enemy collides with player 1
     void OnTriggerEnter2D(Collider2D collision) {
