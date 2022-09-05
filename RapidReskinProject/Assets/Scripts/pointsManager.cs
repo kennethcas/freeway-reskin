@@ -6,14 +6,12 @@ using TMPro;
 public class pointsManager : MonoBehaviour
 {
     [Header("Points UI")]
-    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI pointsText;
 
     [Header("Players")]
-    public GameObject player1;
-    public GameObject player2;
+    public GameObject player;
 
-    [Header("Points")]
-
+    [Header("Points Collider")] //if the player collides with this, +1 point
     public BoxCollider2D col;
     public int pts;
 
@@ -26,20 +24,19 @@ public class pointsManager : MonoBehaviour
 
     private void Awake()
     {
-        col = GetComponent<BoxCollider2D>();
         pts = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log(pts); 
         pts++;
-        Vector3 position = transform.position;
-        position.y = bottomOfScreen.y;
-        transform.position = position;
+        pointsText.text = pts.ToString();
+
+       Vector3 position = col.transform.position;
+       position.y = bottomOfScreen.y;
+       col.transform.position = position;
     }
 
-    private void Update()
-    {
-        Debug.Log(pts);
-    }
+    
 }
